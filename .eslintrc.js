@@ -20,6 +20,8 @@ module.exports = {
   plugins: ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   rules: {
     'prettier/prettier': 'error',
+    'import/prefer-default-export': 'off',
+    'react/function-component-definition': 'off',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-filename-extension': [
