@@ -13,4 +13,18 @@ export const Content = styled.div`
   height: 64px;
   display: flex;
   align-items: center;
+
+  justify-content: space-between;
+
+  .go-back {
+    color: ${({ theme }) => theme.colors['gray-400']};
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s ease all;
+
+    &:hover {
+      color: ${({ theme }) => theme.colors['gray-700']};
+    }
+  }
 `;
