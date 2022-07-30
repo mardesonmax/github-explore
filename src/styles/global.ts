@@ -13,7 +13,7 @@ export default createGlobalStyle`
     background: url(${GithubBg})  ${({ theme }) => theme.colors['gray-100']};
     background-repeat: no-repeat;
     background-position: top center;
-    background-position-x: 80%;
+    background-position-x: 60%;
   }
 
   @media (max-width: 1080px) {
