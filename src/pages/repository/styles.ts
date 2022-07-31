@@ -112,22 +112,39 @@ export const Cards = styled.div`
 `;
 
 export const Card = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 16px;
-  background: ${({ theme }) => theme.colors.white};
-  border-radius: 5px;
-  transition: 0.3s ease all;
+  a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    background: ${({ theme }) => theme.colors.white};
+    border-radius: 5px;
+    transition: 0.3s ease all;
 
-  h2 {
-    font-size: 1.5rem;
-    color: ${({ theme }) => theme.colors['gray-700']};
-  }
+    .item {
+      flex: 1 h2 {
+        font-size: 1.5rem;
+        color: ${({ theme }) => theme.colors['gray-700']};
+      }
 
-  p {
-    font-size: 1rem;
-    color: ${({ theme }) => theme.colors['gray-400']};
-    margin-top: 4px;
-    font-weight: 400;
+      p {
+        font-size: 1rem;
+        color: ${({ theme }) => theme.colors['gray-400']};
+        margin-top: 4px;
+        font-weight: 400;
+      }
+    }
+
+    .icon {
+      color: ${({ theme }) => theme.colors['gray-400']};
+      transition: 0.3s ease all;
+    }
+
+    &:hover {
+      .icon {
+        color: ${({ theme }) => theme.colors['green-200']};
+      }
+      box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.06);
+    }
   }
 `;
