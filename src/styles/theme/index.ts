@@ -6,5 +6,6 @@ export const theme = {
     'gray-800': '#3A3A3A',
     'gray-400': '#A8A8B3',
     'green-200': '#04D361',
+    'red-100': '#ff3333',
   },
 };
