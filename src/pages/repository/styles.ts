@@ -10,6 +10,14 @@ export const Content = styled.div`
   max-width: 960px;
   width: 100%;
   padding: 0 16px;
+
+  .loading-issues {
+    padding-bottom: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export const ContentHeader = styled.div`
