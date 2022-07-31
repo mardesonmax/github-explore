@@ -99,6 +99,10 @@ export const Repository: React.FC = () => {
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [handleScroll]);
 
   return (
