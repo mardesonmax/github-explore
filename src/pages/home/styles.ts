@@ -29,6 +29,10 @@ export const Cards = styled.div`
   margin-top: 120px;
   margin-bottom: 40px;
   max-width: 714px;
+
+  @media (max-width: 575.98px) {
+    margin-top: 80px;
+  }
 `;
 
 export const Card = styled(Link)`
@@ -49,7 +53,7 @@ export const Card = styled(Link)`
     img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
   }
 
@@ -79,5 +83,13 @@ export const Card = styled(Link)`
       color: ${({ theme }) => theme.colors['green-200']};
     }
     box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 575.98px) {
+    .details {
+      h2 {
+        font-size: 1.25rem;
+      }
+    }
   }
 `;

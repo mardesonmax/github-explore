@@ -98,6 +98,9 @@ export const ContentHeader = styled.div`
     }
 
     .repo-numbers {
+      gap: 16px;
+      justify-content: space-between;
+
       .item {
         span {
           font-size: 2rem;
@@ -117,6 +120,10 @@ export const Cards = styled.div`
   gap: 16px;
   margin-top: 120px;
   margin-bottom: 40px;
+
+  @media (max-width: 575.98px) {
+    margin-top: 80px;
+  }
 `;
 
 export const Card = styled.div`
@@ -128,9 +135,12 @@ export const Card = styled.div`
     background: ${({ theme }) => theme.colors.white};
     border-radius: 5px;
     transition: 0.3s ease all;
+    gap: 16px;
 
     .item {
-      flex: 1 h2 {
+      flex: 1;
+
+      h2 {
         font-size: 1.5rem;
         color: ${({ theme }) => theme.colors['gray-700']};
       }
@@ -140,6 +150,11 @@ export const Card = styled.div`
         color: ${({ theme }) => theme.colors['gray-400']};
         margin-top: 4px;
         font-weight: 400;
+      }
+
+      h2,
+      p {
+        word-break: break-all;
       }
     }
 
@@ -153,6 +168,16 @@ export const Card = styled.div`
         color: ${({ theme }) => theme.colors['green-200']};
       }
       box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.06);
+    }
+  }
+
+  @media (max-width: 575.98px) {
+    a {
+      .item {
+        h2 {
+          font-size: 1.25rem;
+        }
+      }
     }
   }
 `;
