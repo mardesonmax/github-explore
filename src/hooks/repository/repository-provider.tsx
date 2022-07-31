@@ -45,19 +45,30 @@ export const RepositoryProvider: React.FC<Props> = ({ children }) => {
     localStorage.setItem('@github-explorer-repo', JSON.stringify(repositories));
   }, [repositories]);
 
-  const search = useCallback(async (repository: string) => {
-    const { data } = await api.get<RepositoryDTO>(`repos/${repository}`);
+  const search = useCallback(
+    async (repository: string) => {
+      const { data } = await api.get<RepositoryDTO>(`repos/${repository}`);
 
-    setRepositories(previewsState => [
-      {
-        id: data.id,
-        avatarUrl: data.owner.avatar_url,
-        fullName: data.full_name,
-        description: data.description,
-      },
-      ...previewsState,
-    ]);
-  }, []);
+      const repositoryExists = repositories.findIndex(
+        repoFind => repoFind.id === data.id,
+      );
+
+      if (repositoryExists !== -1) {
+        repositories.splice(repositoryExists, 1);
+      }
+
+      setRepositories(previewsState => [
+        {
+          id: data.id,
+          avatarUrl: data.owner.avatar_url,
+          fullName: data.full_name,
+          description: data.description,
+        },
+        ...previewsState,
+      ]);
+    },
+    [repositories],
+  );
 
   const values = useMemo(
     () => ({
