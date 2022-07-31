@@ -5,53 +5,50 @@ import { useSearchParams } from 'react-router-dom';
 import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
 import { useTheme } from 'styled-components';
 import { Header } from '~/components/header';
-import { IssuesDTO } from '~/dtos/issues-dto';
-import { RepositoryDTO } from '~/dtos/repository-dto';
 import ReactLoading from 'react-loading';
 import { api } from '~/services/api';
 
+import { UserDTO } from '~/dtos/user-dto';
+import { RepoDTO } from '~/dtos/repo-dto';
 import { Container, Content, ContentHeader, Cards, Card } from './styles';
 
 let pageIn = 1;
 let pageOf = 1;
 let inLoading = false;
-const perPage = 40;
+const perPage = 20;
 
-export const Repository: React.FC = () => {
+export const User: React.FC = () => {
   const loadingRef = useRef<LoadingBarRef>(null);
-  const [repository, setRepository] = useState<RepositoryDTO>();
-  const [issues, setIssues] = useState<IssuesDTO[]>([]);
-  const [isLoadingIssues, setIsLoadingIssues] = useState(false);
+  const [user, setUser] = useState<UserDTO>();
+  const [repositories, setRepositories] = useState<RepoDTO[]>([]);
+  const [isLoadingRepo, setIsLoadingRepo] = useState(false);
 
   const { colors } = useTheme();
 
   const [searchParams] = useSearchParams();
-  const repositoryName = searchParams.get('repo');
+  const username = searchParams.get('username');
 
-  const handleGetIssues = useCallback(
-    async (page = 1): Promise<AxiosResponse<IssuesDTO[]> | any> => {
+  const handleGetRepository = useCallback(
+    async (page = 1): Promise<AxiosResponse<RepoDTO[]> | any> => {
       try {
-        setIsLoadingIssues(true);
-        const result = await api.get<IssuesDTO[]>(
-          `repos/${repositoryName}/issues`,
-          {
-            params: {
-              page,
-              per_page: perPage,
-            },
+        setIsLoadingRepo(true);
+        const result = await api.get<RepoDTO[]>(`/users/${username}/repos`, {
+          params: {
+            page,
+            per_page: perPage,
           },
-        );
+        });
 
         pageIn = page;
-        setIsLoadingIssues(false);
+        setIsLoadingRepo(false);
         return result;
       } catch {
-        setIsLoadingIssues(false);
+        setIsLoadingRepo(false);
       }
 
       return Promise.reject();
     },
-    [repositoryName],
+    [username],
   );
 
   useEffect(() => {
@@ -59,20 +56,20 @@ export const Repository: React.FC = () => {
       try {
         loadingRef.current?.continuousStart(0, 100);
 
-        const [repositoryResult, issuesResult] = await Promise.all([
-          api.get<RepositoryDTO>(`repos/${repositoryName}`),
-          handleGetIssues(),
+        const [userResult, issuesResult] = await Promise.all([
+          api.get<UserDTO>(`/users/${username}`),
+          handleGetRepository(),
         ]);
 
-        setRepository(repositoryResult.data);
-        setIssues(issuesResult.data);
-        pageOf = repositoryResult.data.open_issues / 10;
+        setUser(userResult.data);
+        setRepositories(issuesResult.data);
+        pageOf = userResult.data.public_repos / perPage;
         loadingRef.current?.complete();
       } catch {
         Promise.reject();
       }
     })();
-  }, [repositoryName, handleGetIssues]);
+  }, [username, handleGetRepository]);
 
   const handleScroll = useCallback(
     async (e: Event) => {
@@ -86,15 +83,15 @@ export const Repository: React.FC = () => {
         !inLoading
       ) {
         inLoading = true;
-        const result = await handleGetIssues(pageIn + 1);
+        const result = await handleGetRepository(pageIn + 1);
 
         inLoading = false;
         if (result) {
-          setIssues(state => [...state, ...result.data]);
+          setRepositories(state => [...state, ...result.data]);
         }
       }
     },
-    [handleGetIssues],
+    [handleGetRepository],
   );
 
   useEffect(() => {
@@ -116,48 +113,48 @@ export const Repository: React.FC = () => {
       <Container>
         <Header isGoBack />
 
-        {repository && (
+        {user && (
           <Content>
             <ContentHeader>
               <div className="repo-info">
                 <div className="avatar">
-                  <img src={repository.owner.avatar_url} alt="" />
+                  <img src={user.avatar_url} alt="" />
                 </div>
 
                 <div className="details">
-                  <h2>{repository.full_name}</h2>
+                  <h2>{user.name}</h2>
 
-                  {repository.description && <p>{repository.description}</p>}
+                  {user.login && <p>{user.login}</p>}
                 </div>
               </div>
 
               <div className="repo-numbers">
                 <div className="item">
-                  <span>{repository.watchers}</span>
-                  <p>Stars</p>
+                  <span>{user.following}</span>
+                  <p>Seguindo</p>
                 </div>
                 <div className="item">
-                  <span>{repository.forks}</span>
-                  <p>Forks</p>
+                  <span>{user.followers}</span>
+                  <p>Seguidores</p>
                 </div>
                 <div className="item">
-                  <span>{repository.open_issues}</span>
-                  <p>Issues abertas</p>
+                  <span>{user.public_repos}</span>
+                  <p>Repositórios</p>
                 </div>
               </div>
             </ContentHeader>
 
             <Cards>
-              {issues.map(issue => (
-                <Card key={issue.id}>
+              {repositories.map(repository => (
+                <Card key={repository.id}>
                   <a
-                    href={issue.html_url}
+                    href={repository.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <div className="item">
-                      <h2>{issue.title}</h2>
-                      <p>{issue.user.login}</p>
+                      <h2>{repository.name}</h2>
+                      <p>{repository.description}</p>
                     </div>
 
                     <div className="icon">
@@ -168,8 +165,8 @@ export const Repository: React.FC = () => {
               ))}
             </Cards>
 
-            {isLoadingIssues && (
-              <div className="loading-issues">
+            {isLoadingRepo && (
+              <div className="loading-repositories">
                 <ReactLoading
                   type="spin"
                   color={colors['green-200']}

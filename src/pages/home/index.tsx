@@ -3,12 +3,11 @@ import { Header } from '~/components/header';
 import { Search } from '~/components/search';
 import { FaChevronRight } from 'react-icons/fa';
 
-import { useRepository } from '~/hooks/repository';
-import { createPath, createSearchParams } from 'react-router-dom';
+import { useUser } from '~/hooks/user';
 import { Container, Content, ContentHeader, Cards, Card } from './styles';
 
 export const Home: React.FC = () => {
-  const { repositories } = useRepository();
+  const { users } = useUser();
   return (
     <Container>
       <Header />
@@ -24,18 +23,15 @@ export const Home: React.FC = () => {
         </ContentHeader>
 
         <Cards>
-          {repositories.map(repository => (
-            <Card
-              to={`repository?repo=${repository.fullName.trim()}`}
-              key={repository.id}
-            >
+          {users.map(user => (
+            <Card to={`user?username=${user.login}`} key={user.id}>
               <div className="avatar">
-                <img src={repository.avatarUrl} alt="Avatar" />
+                <img src={user.avatar_url} alt="Avatar" />
               </div>
 
               <div className="details">
-                <h2>{repository.fullName}</h2>
-                {repository.description && <p>{repository.description}</p>}
+                <h2>{user.name}</h2>
+                <p>{user.login}</p>
               </div>
 
               <div className="icon">

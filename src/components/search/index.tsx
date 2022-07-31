@@ -1,17 +1,13 @@
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useRepository } from '~/hooks/repository';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
+import { useUser } from '~/hooks/user';
 import { Container } from './styles';
 
-const RegexSearch = /\w+([/])\w+/g;
 const schemaValidation = yup.object({
-  search: yup
-    .string()
-    .required('Digite o autor/nome do repositório')
-    .matches(RegexSearch, 'Digite o autor/nome do repositório'),
+  search: yup.string().required('Digite o nome do usuário'),
 });
 
 export const Search: React.FC = () => {
@@ -29,8 +25,8 @@ export const Search: React.FC = () => {
     resolver: yupResolver(schemaValidation),
   });
 
-  const { search } = useRepository();
-  const handleSearchRepository = useCallback(
+  const { search } = useUser();
+  const handleSearchUser = useCallback(
     async (values: { search: string }) => {
       try {
         await search(values.search);
@@ -38,7 +34,7 @@ export const Search: React.FC = () => {
         setValue('search', '');
       } catch {
         setError('search', {
-          message: 'Error ao buscar esse repositório',
+          message: 'Error ao buscar esse usuário',
         });
       }
     },
@@ -47,12 +43,12 @@ export const Search: React.FC = () => {
 
   return (
     <Container isError={!!errors.search}>
-      <form onSubmit={handleSubmit(handleSearchRepository)}>
+      <form onSubmit={handleSubmit(handleSearchUser)}>
         <label>
           <input
             {...register('search')}
             type="text"
-            placeholder="Digite o nome do repositório"
+            placeholder="Digite o nome do usuário"
           />
           <button type="submit">Pesquisar</button>
         </label>

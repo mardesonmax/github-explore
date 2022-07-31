@@ -11,7 +11,7 @@ export const Content = styled.div`
   width: 100%;
   padding: 0 16px;
 
-  .loading-issues {
+  .loading-repositories {
     padding-bottom: 16px;
     width: 100%;
     display: flex;
