@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import { FaChevronLeft } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Container, Content } from './styles';
 
 import Logo from '../../assets/svg/logo.svg';
@@ -20,7 +20,9 @@ export const Header: React.FC<Props> = ({ isGoBack }) => {
   return (
     <Container>
       <Content>
-        <img src={Logo} alt="Github Explorer" />
+        <Link to="/">
+          <img src={Logo} alt="Github Explorer" />
+        </Link>
 
         {isGoBack && (
           <button onClick={handleGoBack} className="go-back" type="button">
