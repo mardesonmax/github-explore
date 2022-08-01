@@ -15,11 +15,16 @@ export const Content = styled.div`
 
 export const ContentHeader = styled.div`
   margin-top: 80px;
-  font-weight: 700;
-  font-size: 3rem;
+
   display: flex;
   flex-direction: column;
   gap: 40px;
+
+  h1 {
+    font-weight: 700;
+    font-size: 3rem;
+    color: ${({ theme }) => theme.colors['gray-800']};
+  }
 `;
 
 export const Cards = styled.div`
