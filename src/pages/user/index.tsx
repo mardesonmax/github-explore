@@ -39,7 +39,6 @@ export const User: React.FC = () => {
           },
         });
 
-        pageIn = page;
         setIsLoadingRepo(false);
         return result;
       } catch {
@@ -66,6 +65,7 @@ export const User: React.FC = () => {
         pageOf = userResult.data.public_repos / perPage;
         loadingRef.current?.complete();
       } catch {
+        loadingRef.current?.complete();
         Promise.reject();
       }
     })();
@@ -83,12 +83,13 @@ export const User: React.FC = () => {
         !inLoading
       ) {
         inLoading = true;
-        const result = await handleGetRepository(pageIn + 1);
+        pageIn += 1;
+        const result = await handleGetRepository(pageIn);
 
-        inLoading = false;
         if (result) {
           setRepositories(state => [...state, ...result.data]);
         }
+        inLoading = false;
       }
     },
     [handleGetRepository],

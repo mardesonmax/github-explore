@@ -4,6 +4,7 @@ export const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-height: 100vh;
 `;
 
 export const Content = styled.div`
