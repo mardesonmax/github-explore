@@ -14,6 +14,7 @@ export default createGlobalStyle`
     background-repeat: no-repeat;
     background-position: top center;
     background-position-x: 60%;
+    background-size: contain;
   }
 
   @media (max-width: 1080px) {
@@ -33,13 +34,13 @@ export default createGlobalStyle`
   }
 
   body,
-input,
-textarea,
-select,
-a,
-button {
-  font: 400 1rem 'Roboto', sans-serif;
-}
+  input,
+  textarea,
+  select,
+  a,
+  button {
+    font: 400 1rem 'Roboto', sans-serif;
+  }
 
   h1,
   h2,

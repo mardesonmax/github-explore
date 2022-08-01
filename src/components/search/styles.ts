@@ -7,10 +7,10 @@ type Props = {
 
 export const Container = styled.div<Props>`
   position: relative;
+  max-width: 714px;
+  width: 100%;
 
   label {
-    max-width: 714px;
-    width: 100%;
     height: 72px;
     display: flex;
     input {
