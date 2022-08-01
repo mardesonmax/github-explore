@@ -1,5 +1,6 @@
-import { AxiosResponse } from 'axios';
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { AxiosResponse } from 'axios';
 import { FaChevronRight } from 'react-icons/fa';
 import { useSearchParams } from 'react-router-dom';
 import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
@@ -12,9 +13,6 @@ import { UserDTO } from '~/dtos/user-dto';
 import { RepoDTO } from '~/dtos/repo-dto';
 import { Container, Content, ContentHeader, Cards, Card } from './styles';
 
-let pageIn = 1;
-let pageOf = 1;
-let inLoading = false;
 const perPage = 20;
 
 export const User: React.FC = () => {
@@ -22,6 +20,10 @@ export const User: React.FC = () => {
   const [user, setUser] = useState<UserDTO>();
   const [repositories, setRepositories] = useState<RepoDTO[]>([]);
   const [isLoadingRepo, setIsLoadingRepo] = useState(false);
+  const [page, setPage] = useState({
+    in: 1,
+    of: 1,
+  });
 
   const { colors } = useTheme();
 
@@ -29,12 +31,12 @@ export const User: React.FC = () => {
   const username = searchParams.get('username');
 
   const handleGetRepository = useCallback(
-    async (page = 1): Promise<AxiosResponse<RepoDTO[]> | any> => {
+    async (pageIn = 1): Promise<AxiosResponse<RepoDTO[]> | any> => {
       try {
         setIsLoadingRepo(true);
         const result = await api.get<RepoDTO[]>(`/users/${username}/repos`, {
           params: {
-            page,
+            page: pageIn,
             per_page: perPage,
           },
         });
@@ -62,8 +64,9 @@ export const User: React.FC = () => {
 
         setUser(userResult.data);
         setRepositories(issuesResult.data);
-        pageOf = userResult.data.public_repos / perPage;
+        const pageOf = userResult.data.public_repos / perPage;
         loadingRef.current?.complete();
+        setPage(state => ({ ...state, of: pageOf }));
       } catch {
         loadingRef.current?.complete();
         Promise.reject();
@@ -79,25 +82,23 @@ export const User: React.FC = () => {
 
       if (
         innerHeight + scrollTop + 1 >= scrollHeight &&
-        pageIn < pageOf &&
-        !inLoading
+        page.in < page.of &&
+        !isLoadingRepo
       ) {
-        inLoading = true;
-        pageIn += 1;
+        const pageIn = page.in + 1;
+        setPage(state => ({ ...state, in: pageIn }));
         const result = await handleGetRepository(pageIn);
 
         if (result) {
           setRepositories(state => [...state, ...result.data]);
         }
-        inLoading = false;
       }
     },
-    [handleGetRepository],
+    [handleGetRepository, page, isLoadingRepo],
   );
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
