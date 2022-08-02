@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { AxiosResponse } from 'axios';
-import { FaChevronRight } from 'react-icons/fa';
 import { useSearchParams } from 'react-router-dom';
 import LoadingBar, { LoadingBarRef } from 'react-top-loading-bar';
 import { useTheme } from 'styled-components';
@@ -11,7 +10,8 @@ import { api } from '~/services/api';
 
 import { UserDTO } from '~/dtos/user-dto';
 import { RepoDTO } from '~/dtos/repo-dto';
-import { Container, Content, ContentHeader, Cards, Card } from './styles';
+import { Card } from '~/components/card';
+import { Container, Content, ContentHeader, Cards } from './styles';
 
 const perPage = 20;
 
@@ -148,22 +148,17 @@ export const User: React.FC = () => {
 
             <Cards>
               {repositories.map(repository => (
-                <Card key={repository.id}>
-                  <a
-                    href={repository.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <div className="item">
-                      <h2>{repository.name}</h2>
-                      <p>{repository.description}</p>
-                    </div>
-
-                    <div className="icon">
-                      <FaChevronRight />
-                    </div>
-                  </a>
-                </Card>
+                <a
+                  href={repository.html_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  key={repository.id}
+                >
+                  <Card
+                    title={repository.name}
+                    description={repository.description}
+                  />
+                </a>
               ))}
             </Cards>
 

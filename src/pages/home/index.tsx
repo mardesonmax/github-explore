@@ -1,10 +1,11 @@
 import React from 'react';
 import { Header } from '~/components/header';
 import { Search } from '~/components/search';
-import { FaChevronRight } from 'react-icons/fa';
 
 import { useUser } from '~/hooks/user';
-import { Container, Content, ContentHeader, Cards, Card } from './styles';
+import { Card } from '~/components/card';
+import { Link } from 'react-router-dom';
+import { Container, Content, ContentHeader, Cards } from './styles';
 
 export const Home: React.FC = () => {
   const { users } = useUser();
@@ -24,20 +25,13 @@ export const Home: React.FC = () => {
 
         <Cards>
           {users.map(user => (
-            <Card to={`user?username=${user.login}`} key={user.id}>
-              <div className="avatar">
-                <img src={user.avatar_url} alt="Avatar" />
-              </div>
-
-              <div className="details">
-                <h2>{user.name}</h2>
-                <p>{user.login}</p>
-              </div>
-
-              <div className="icon">
-                <FaChevronRight />
-              </div>
-            </Card>
+            <Link key={user.id} to={`user?username=${user.login}`}>
+              <Card
+                avatar={user.avatar_url}
+                title={user.name}
+                description={user.login}
+              />
+            </Link>
           ))}
         </Cards>
       </Content>
