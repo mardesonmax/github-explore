@@ -1,16 +1,19 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import { useUser } from '~/hooks/user';
 import { Container } from './styles';
 
 const schemaValidation = yup.object({
   search: yup.string().required('Digite o nome do usuário'),
 });
 
-export const Search: React.FC = () => {
+interface SearchProps {
+  search: (search: string) => Promise<void>;
+}
+
+export const Search: React.FC<SearchProps> = ({ search }) => {
   const {
     register,
     handleSubmit,
@@ -25,7 +28,6 @@ export const Search: React.FC = () => {
     resolver: yupResolver(schemaValidation),
   });
 
-  const { search } = useUser();
   const handleSearchUser = useCallback(
     async (values: { search: string }) => {
       try {

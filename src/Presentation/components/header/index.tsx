@@ -2,9 +2,8 @@ import React, { useCallback } from 'react';
 
 import { FaChevronLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
+import Logo from '~/assets/svg/logo.svg';
 import { Container, Content } from './styles';
-
-import Logo from '../../assets/svg/logo.svg';
 
 type Props = {
   isGoBack?: boolean;

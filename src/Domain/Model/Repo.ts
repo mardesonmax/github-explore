@@ -1,4 +1,4 @@
-export interface RepoDTO {
+export interface Repo {
   html_url: string;
   id: number;
   name: string;

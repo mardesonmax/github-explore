@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const accessToken = process.env.REACT_APP_GITHUB_ACCESS_TOKEN;
 
-export const api = axios.create({
+export const client = axios.create({
   headers: {
     Authorization: `token ${accessToken}`,
   },

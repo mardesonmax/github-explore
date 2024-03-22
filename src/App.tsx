@@ -1,16 +1,12 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from './styles/theme';
-
-import GlobalStyles from './styles/global';
-import { Routers } from './routers';
-import { Hooks } from './hooks';
+import GlobalStyles from '~/Presentation/styles/global';
+import { theme } from './Presentation/styles/theme';
+import { Routers } from './Presentation/routers';
 
 export const App: React.FC = () => (
   <ThemeProvider theme={theme}>
-    <Hooks>
-      <Routers />
-    </Hooks>
+    <Routers />
 
     <GlobalStyles />
   </ThemeProvider>

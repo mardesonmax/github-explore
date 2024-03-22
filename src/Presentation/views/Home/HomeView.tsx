@@ -1,14 +1,15 @@
 import React from 'react';
-import { Header } from '~/components/header';
-import { Search } from '~/components/search';
 
-import { useUser } from '~/hooks/user';
-import { Card } from '~/components/card';
 import { Link } from 'react-router-dom';
-import { Container, Content, ContentHeader, Cards } from './styles';
+import { Card } from '~/Presentation/components/card';
+import { Header } from '~/Presentation/components/header';
+import { Search } from '~/Presentation/components/search';
+import { useHomeViewModel } from './HomeViewModel';
+import { Cards, Container, Content, ContentHeader } from './styles';
 
-export const Home: React.FC = () => {
-  const { users } = useUser();
+export const HomeView: React.FC = () => {
+  const { users, search } = useHomeViewModel();
+
   return (
     <Container>
       <Header />
@@ -20,7 +21,7 @@ export const Home: React.FC = () => {
             no Github.
           </h1>
 
-          <Search />
+          <Search search={search} />
         </ContentHeader>
 
         <Cards>
