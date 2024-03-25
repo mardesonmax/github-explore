@@ -1,11 +1,7 @@
 import { shade } from 'polished';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-type Props = {
-  isError: boolean;
-};
-
-export const Container = styled.div<Props>`
+export const Container = styled.div`
   position: relative;
   max-width: 714px;
   width: 100%;
@@ -63,13 +59,11 @@ export const Container = styled.div<Props>`
     color: ${({ theme }) => theme.colors['red-100']};
   }
 
-  ${({ isError, theme }) =>
-    isError &&
-    css`
-      label {
-        input {
-          border-color: ${theme.colors['red-100']};
-        }
+  &.error {
+    label {
+      input {
+        border-color: ${({ theme }) => theme.colors['red-100']};
       }
-    `}
+    }
+  }
 `;

@@ -1,12 +1,17 @@
+import { inject, injectable } from 'tsyringe';
 import {
   FindReposDTO,
-  RepoRepository,
-} from '~/Domain/Repository/RepoRepository';
+  IRepoRepository,
+} from '~/Domain/Repository/IRepoRepository';
 
+@injectable()
 export class FindReposUseCase {
-  constructor(private userRepoRepository: RepoRepository) {}
+  constructor(
+    @inject('RepoRepository')
+    private repoRepository: IRepoRepository,
+  ) {}
 
   async execute(data: FindReposDTO) {
-    return this.userRepoRepository.findRepos(data);
+    return this.repoRepository.findRepos(data);
   }
 }

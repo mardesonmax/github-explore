@@ -1,5 +1,5 @@
 import { User } from '~/Domain/Model/User';
 
-export interface UserDataSource {
+export interface IUserDataSource {
   findUserByUsername(username: string): Promise<User>;
 }

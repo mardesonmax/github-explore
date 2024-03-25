@@ -8,6 +8,6 @@ export interface FindReposDTO {
   };
 }
 
-export interface RepoRepository {
+export interface IRepoRepository {
   findRepos(data: FindReposDTO): Promise<Repo[]>;
 }

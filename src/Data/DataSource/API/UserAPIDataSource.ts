@@ -1,8 +1,8 @@
 import { User } from '~/Domain/Model/User';
-import { UserDataSource } from '../UserDataSource';
+import { IUserDataSource } from '../IUserDataSource';
 import { client } from './client';
 
-export class UserAPIDataSource implements UserDataSource {
+export class UserAPIDataSource implements IUserDataSource {
   async findUserByUsername(username: string): Promise<User> {
     const { data } = await client.get<User>(`users/${username}`);
 

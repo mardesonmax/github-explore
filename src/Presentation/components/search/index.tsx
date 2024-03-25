@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
+import classNames from 'classnames';
 import { Container } from './styles';
 
 const schemaValidation = yup.object({
@@ -44,7 +45,11 @@ export const Search: React.FC<SearchProps> = ({ search }) => {
   );
 
   return (
-    <Container isError={!!errors.search}>
+    <Container
+      className={classNames({
+        error: !!errors.search,
+      })}
+    >
       <form onSubmit={handleSubmit(handleSearchUser)}>
         <label>
           <input

@@ -1,14 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import { UserAPIDataSource } from '~/Data/DataSource/API/UserAPIDataSource';
-import { UserDataSourceImpl } from '~/Data/Repository/UserRepositoryImpl';
+import { container } from 'tsyringe';
 import { User } from '~/Domain/Model/User';
 import { FindUserUseCase } from '~/Domain/UseCases/User/FindUserUseCase';
 
-const userAPIDataSource = new UserAPIDataSource();
-
-const userDataSourceImpl = new UserDataSourceImpl(userAPIDataSource);
-
-const findUserUseCase = new FindUserUseCase(userDataSourceImpl);
+const findUserUseCase = container.resolve(FindUserUseCase);
 
 export function useHomeViewModel() {
   const [users, setUsers] = useState<User[]>(() => {

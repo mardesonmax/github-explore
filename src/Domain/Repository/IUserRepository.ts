@@ -1,5 +1,5 @@
 import { User } from '../Model/User';
 
-export interface UserRepository {
+export interface IUserRepository {
   findUserByUsername(username: string): Promise<User>;
 }

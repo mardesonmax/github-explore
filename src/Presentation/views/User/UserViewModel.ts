@@ -2,10 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { LoadingBarRef } from 'react-top-loading-bar';
-import { RepoAPIDataSource } from '~/Data/DataSource/API/RepoAPIDataSource';
-import { UserAPIDataSource } from '~/Data/DataSource/API/UserAPIDataSource';
-import { RepoDataSourceImpl } from '~/Data/Repository/RepoRepositoryImpl';
-import { UserDataSourceImpl } from '~/Data/Repository/UserRepositoryImpl';
+import { container } from 'tsyringe';
 import { Repo } from '~/Domain/Model/Repo';
 import { User } from '~/Domain/Model/User';
 import { FindReposUseCase } from '~/Domain/UseCases/Repo/FindReposUseCase';
@@ -13,17 +10,8 @@ import { FindUserUseCase } from '~/Domain/UseCases/User/FindUserUseCase';
 
 const perPage = 20;
 
-const repoAPIDataSource = new RepoAPIDataSource();
-
-const repoDataSourceImpl = new RepoDataSourceImpl(repoAPIDataSource);
-
-const findReposUseCase = new FindReposUseCase(repoDataSourceImpl);
-
-const userAPIDataSource = new UserAPIDataSource();
-
-const userDataSourceImpl = new UserDataSourceImpl(userAPIDataSource);
-
-const findUserUseCase = new FindUserUseCase(userDataSourceImpl);
+const findReposUseCase = container.resolve(FindReposUseCase);
+const findUserUseCase = container.resolve(FindUserUseCase);
 
 export const useUserViewModel = () => {
   const loadingRef = useRef<LoadingBarRef>(null);

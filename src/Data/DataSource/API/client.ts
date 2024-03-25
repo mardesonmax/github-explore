@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const accessToken = process.env.REACT_APP_GITHUB_ACCESS_TOKEN;
+const accessToken = import.meta.env.VITE_GITHUB_ACCESS_TOKEN;
 
 export const client = axios.create({
   headers: {

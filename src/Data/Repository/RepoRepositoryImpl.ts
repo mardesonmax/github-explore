@@ -1,12 +1,17 @@
 import { Repo } from '~/Domain/Model/Repo';
 import {
   FindReposDTO,
-  RepoRepository,
-} from '~/Domain/Repository/RepoRepository';
-import { RepoAPIDataSource } from '../DataSource/API/RepoAPIDataSource';
+  IRepoRepository,
+} from '~/Domain/Repository/IRepoRepository';
+import { inject, injectable } from 'tsyringe';
+import { IRepoDataSource } from '../DataSource/IRepoDataSource';
 
-export class RepoDataSourceImpl implements RepoRepository {
-  constructor(private repoDataSource: RepoAPIDataSource) {}
+@injectable()
+export class RepoRepositoryImpl implements IRepoRepository {
+  constructor(
+    @inject('RepoDataSource')
+    private repoDataSource: IRepoDataSource,
+  ) {}
 
   findRepos(data: FindReposDTO): Promise<Repo[]> {
     return this.repoDataSource.findRepos(data);

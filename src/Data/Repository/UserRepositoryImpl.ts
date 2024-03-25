@@ -1,9 +1,14 @@
 import { User } from '~/Domain/Model/User';
-import { UserRepository } from '~/Domain/Repository/UserRepository';
-import { UserDataSource } from '../DataSource/UserDataSource';
+import { IUserRepository } from '~/Domain/Repository/IUserRepository';
+import { inject, injectable } from 'tsyringe';
+import { IUserDataSource } from '../DataSource/IUserDataSource';
 
-export class UserDataSourceImpl implements UserRepository {
-  constructor(private userDataSource: UserDataSource) {}
+@injectable()
+export class UserRepositoryImpl implements IUserRepository {
+  constructor(
+    @inject('UserDataSource')
+    private userDataSource: IUserDataSource,
+  ) {}
 
   findUserByUsername(username: string): Promise<User> {
     return this.userDataSource.findUserByUsername(username);
