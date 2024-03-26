@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 
 import { FaChevronLeft } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
-import Logo from '~/assets/svg/logo.svg';
+import Logo from '~/Presentation/assets/svg/logo.svg';
 import { Container, Content } from './styles';
 
 type Props = {
